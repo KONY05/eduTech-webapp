@@ -41,7 +41,7 @@
 
 * {
     box-sizing: border-box;
-    font-family: var(--font-public-sans), serif;
+    font-family: var(--font-public-sans), serif, system-ui;
 }
 
 /*@theme inline {
@@ -143,10 +143,11 @@ body {
 /*---break---*/
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+    * {
+        @apply border-border outline-ring/50;
     }
-  body {
-    @apply bg-background text-foreground;
+
+    body {
+        @apply bg-background text-foreground;
     }
 }
