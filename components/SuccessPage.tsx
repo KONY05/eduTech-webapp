@@ -18,7 +18,7 @@ function SuccessPage({
         alt="Exam Padi Logo"
         width={50}
         height={50}
-        className="px-3 pt-3"
+        className="px-3 pt-3 md:w-[80px] md:px-5 md:pt-5"
       />
       <div className="relative z-50 mx-auto flex h-[80vh] w-[80%] flex-col items-center justify-center gap-3 md:w-[30%] md:gap-4">
         <Image
@@ -37,6 +37,7 @@ function SuccessPage({
         </Button>
       </div>
       <div className="absolute bottom-0 left-0 z-10">
+        {/*
         <Image
           src="/blurLayoutImage.png"
           alt="layout Image"
@@ -44,6 +45,7 @@ function SuccessPage({
           height="100"
           className="md:w-[600px]"
         />
+          */}
       </div>
     </main>
   );
