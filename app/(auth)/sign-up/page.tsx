@@ -1,35 +1,56 @@
 "use client";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {useForm} from "react-hook-form";
-import {z} from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import {Button} from "@/components/ui/button";
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form";
-import {Input} from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
-const formSchema = z.object({
-  fullName: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  email: z.string().email({ message: "Invalid email address" }),
-  phoneNumber: z.string().min(10, { message: "Invalid phone number" }),
-  level: z.string().min(2, {
-    message: "Select a Level",
-  }),
-  // TODO: see if you can check when the both of them are the same
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
-  confirmPassword: z.string().min(8, {
-    message: "Password must be the same",
-  }),
-  referralCode: z.string().optional()
-});
+const formSchema = z
+  .object({
+    fullName: z.string().min(2, {
+      message: "Username must be at least 2 characters.",
+    }),
+    email: z.string().email({ message: "Invalid email address" }),
+    phoneNumber: z.string().min(10, { message: "Invalid phone number" }),
+    level: z.string().min(2, {
+      message: "Select a Level",
+    }),
+    referralCode: z.string().optional(),
+    // TODO: see if you can check when the both of them are the same
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters." }),
+    confirmPassword: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters." }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"], // This shows the error on the confirm password field
+  });
 
 function Page() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,6 +65,8 @@ function Page() {
   });
 
   const [isFirstSectionVisible, setIsFirstSectionVisible] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSectionClick = () => {
     setIsFirstSectionVisible(false);
@@ -52,6 +75,7 @@ function Page() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log("Form validated successfully");
     console.log(values);
+    router.push(`sign-up/success/?subscription=${form.getValues().level}`);
   }
 
   return (
@@ -70,7 +94,7 @@ function Page() {
         </section>
       ) : (
         <section className="overflow-y-hidden">
-          <header className="flex items-center justify-between p-3 md:p-5 lg:mx-8 ">
+          <header className="flex items-center justify-between p-3 md:p-5 lg:mx-8">
             <Image
               src="/examPadiLogo.png"
               alt="ExamPadi Logo"
@@ -85,7 +109,7 @@ function Page() {
             </p>
           </header>
 
-          <div className="flex flex-col items-center gap-3 ">
+          <div className="flex flex-col items-center gap-3">
             <div className="text-center">
               <h1 className="text-xl font-medium">
                 Let’s create your account ✍️
@@ -95,7 +119,7 @@ function Page() {
               </p>
             </div>
 
-            <div className="w-[85%] rounded-lg bg-[#F3F2FF] p-6 md:p-9 h-[400px] overflow-y-auto z-50 md:h-[600px] lg:w-[35%] lg:h-[550px] md:w-[60%]">
+            <div className="z-50 h-[400px] w-[85%] overflow-y-auto rounded-lg bg-[#F3F2FF] p-6 md:h-[600px] md:w-[60%] md:p-9 lg:h-[550px] lg:w-[35%]">
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
@@ -119,7 +143,7 @@ function Page() {
                         <FormControl>
                           <Input
                             placeholder="Full name"
-                            className="rounded-sm bg-white ring-0 outline-none focus:border-yellow-300 placeholder:text-[14px]"
+                            className="rounded-sm bg-white ring-0 outline-none placeholder:text-[14px] focus:border-yellow-300"
                             {...field}
                           />
                         </FormControl>
@@ -146,7 +170,7 @@ function Page() {
                           <Input
                             placeholder="Email Address"
                             type="email"
-                            className="rounded-sm bg-white ring-0 outline-none focus:border-yellow-300 placeholder:text-[14px]"
+                            className="rounded-sm bg-white ring-0 outline-none placeholder:text-[14px] focus:border-yellow-300"
                             {...field}
                           />
                         </FormControl>
@@ -156,36 +180,34 @@ function Page() {
                   />
                   {/* TODO: Implement number code generator functionality*/}
                   <div>
+                    <FormField
+                      control={form.control}
+                      name="phoneNumber"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-[#6B7083]">
+                            <Image
+                              src="/icons/userIcon.svg"
+                              alt="user icon"
+                              width={15}
+                              height={15}
+                            />
+                            Phone Number
+                          </FormLabel>
 
-                  <FormField
-                    control={form.control}
-                    name="phoneNumber"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-[#6B7083]">
-                          <Image
-                            src="/icons/userIcon.svg"
-                            alt="user icon"
-                            width={15}
-                            height={15}
-                          />
-                          Phone Number
-                        </FormLabel>
-
-                        <FormControl>
-                          <Input
-                            placeholder="Phone Number"
-                            className="rounded-sm bg-white ring-0 outline-none focus:border-yellow-300 placeholder:text-[14px]"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                          <FormControl>
+                            <Input
+                              placeholder="Phone Number"
+                              className="rounded-sm bg-white ring-0 outline-none placeholder:text-[14px] focus:border-yellow-300"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   </div>
-                  {/* TODO: Implement select level field*/}
-                   <FormField
+                  <FormField
                     control={form.control}
                     name="level"
                     render={({ field }) => (
@@ -199,19 +221,27 @@ function Page() {
                           />
                           Select a level
                         </FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl className="w-full rounded-sm bg-white ring-0 outline-none placeholder:text-[14px] focus:border-yellow-300">
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select a level" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="primary">Primary</SelectItem>
+                            <SelectItem value="junior">Junior</SelectItem>
+                            <SelectItem value="senior">Senior</SelectItem>
+                            <SelectItem value="full">Full</SelectItem>
+                          </SelectContent>
+                        </Select>
 
-                        <FormControl>
-                          <Input
-                            placeholder="Primary, Junior, Senior"
-                            className="rounded-sm bg-white ring-0 outline-none focus:border-yellow-300 placeholder:text-[14px]"
-                            {...field}
-                          />
-                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  {/* TODO: Implement show password functionality*/}
                   <FormField
                     control={form.control}
                     name="password"
@@ -226,19 +256,28 @@ function Page() {
                           />
                           Create Password
                         </FormLabel>
-
                         <FormControl>
-                          <Input
-                              type="password"
-                            placeholder="Create Password"
-                            className="rounded-sm bg-white ring-0 outline-none focus:border-yellow-300 placeholder:text-[14px]"
-                            {...field}
-                          />
+                          <div className="relative">
+                            <Input
+                              type={showPassword ? "text" : "password"}
+                              placeholder="Create Password"
+                              className="rounded-sm bg-white pr-10 ring-0 outline-none placeholder:text-[14px] focus:border-yellow-300"
+                              {...field}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setShowPassword((pwd) => !pwd)}
+                              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-sm text-[#FBBE07] underline underline-offset-1"
+                            >
+                              {showPassword ? "Hide" : "Show"}
+                            </button>
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
-                  /> <FormField
+                  />
+                  <FormField
                     control={form.control}
                     name="confirmPassword"
                     render={({ field }) => (
@@ -252,19 +291,30 @@ function Page() {
                           />
                           Confirm Password
                         </FormLabel>
-
                         <FormControl>
-                          <Input type="password"
-                            placeholder="Confirm Password"
-                            className="rounded-sm bg-white ring-0 outline-none focus:border-yellow-300 placeholder:text-[14px]"
-                            {...field}
-
-                          />
+                          <div className="relative">
+                            <Input
+                              type={showConfirmPassword ? "text" : "password"}
+                              placeholder="Confirm Password"
+                              className="rounded-sm bg-white pr-10 ring-0 outline-none placeholder:text-[14px] focus:border-yellow-300"
+                              {...field}
+                            />
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setShowConfirmPassword((pwd) => !pwd)
+                              }
+                              className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-sm text-[#FBBE07] underline underline-offset-1"
+                            >
+                              {showConfirmPassword ? "Hide" : "Show"}
+                            </button>
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
-                  /><FormField
+                  />
+                  <FormField
                     control={form.control}
                     name="referralCode"
                     render={({ field }) => (
@@ -276,15 +326,16 @@ function Page() {
                             width={15}
                             height={15}
                           />
-                          Referral Code <sup>
-                          <i className="text-[12px]/18px">(optional)</i>
-                        </sup>
+                          Referral Code{" "}
+                          <sup>
+                            <i className="text-[12px]/18px">(optional)</i>
+                          </sup>
                         </FormLabel>
 
                         <FormControl>
                           <Input
                             placeholder="Referral Code"
-                            className="rounded-sm bg-white ring-0 outline-none focus:border-yellow-300 placeholder:text-[14px]"
+                            className="rounded-sm bg-white ring-0 outline-none placeholder:text-[14px] focus:border-yellow-300"
                             {...field}
                           />
                         </FormControl>
@@ -292,7 +343,12 @@ function Page() {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit"  className={`font-semibold w-full rounded-xl ${!form.formState.isValid && "cursor-not-allowed bg-[#CBCAD3]"}`}>Create an Account</Button>
+                  <Button
+                    type="submit"
+                    className={`w-full rounded-xl font-semibold ${!form.formState.isValid && "cursor-not-allowed bg-[#CBCAD3]"}`}
+                  >
+                    Create an Account
+                  </Button>
                 </form>
               </Form>
             </div>
