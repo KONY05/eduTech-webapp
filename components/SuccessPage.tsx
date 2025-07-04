@@ -15,9 +15,13 @@ function SuccessPage({ imageUrl, heading, text, btnText }: SuccessPageProps) {
         className="px-3 pt-3"
       />
       <div className="relative z-50 mx-auto flex h-[80vh] w-[80%] flex-col items-center justify-center gap-3 md:w-[30%] md:gap-4">
-        <div className="rounded-full bg-[#52516F] p-8">
-          <Image src={imageUrl} alt="image" width={80} height={80} />
-        </div>
+        <Image
+          src={imageUrl}
+          alt="image"
+          width={120}
+          height={120}
+          className="md:w-[200px]"
+        />
         <div className="text-center">
           <p className="text-3xl/[38px] font-medium text-white">{heading}</p>
           <p className="md:text-normal text-[12px] text-[#EDE9EE]">{text}</p>
@@ -26,7 +30,7 @@ function SuccessPage({ imageUrl, heading, text, btnText }: SuccessPageProps) {
           <Link href="/sign-in">{btnText}</Link>
         </Button>
       </div>
-      <div className="absolute bottom-0 left-0 z-10 opacity-0">
+      <div className="absolute bottom-0 left-0 z-10">
         <Image
           src="/blurLayoutImage.png"
           alt="layout Image"

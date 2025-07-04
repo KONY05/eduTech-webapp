@@ -95,19 +95,12 @@ function Page() {
               </p>
             </div>
 
-            <div className="w-[85%] rounded-lg bg-[#F3F2FF] p-6 md:p-9 h-[400px] overflow-y-auto z-50 md:h-[600px] lg:w-[35%] lg:h-[550px]">
+            <div className="w-[85%] rounded-lg bg-[#F3F2FF] p-6 md:p-9 h-[400px] overflow-y-auto z-50 md:h-[600px] lg:w-[35%] lg:h-[550px] md:w-[60%]">
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-4"
                 >
-                  {/*
-                    <div className="w-full flex items-center gap-2">
-
-                    <Image src="/icons/userIcon.svg" alt="user icon" width={20} height={20}/>
-                      <p className="text-[#6B7083]">Full name</p>
-                    </div>
-                    */}
                   <FormField
                     control={form.control}
                     name="fullName"
