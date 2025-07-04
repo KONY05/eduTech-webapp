@@ -3,4 +3,5 @@ export type SuccessPageProps = {
   heading: string;
   text: string;
   btnText: string;
+  link: string;
 };

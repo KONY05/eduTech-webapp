@@ -4,7 +4,13 @@ import { SuccessPageProps } from "@/utils/types";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-function SuccessPage({ imageUrl, heading, text, btnText }: SuccessPageProps) {
+function SuccessPage({
+  imageUrl,
+  heading,
+  text,
+  btnText,
+  link,
+}: SuccessPageProps) {
   return (
     <main className="relative h-screen bg-[#2F2D51]">
       <Image
@@ -27,7 +33,7 @@ function SuccessPage({ imageUrl, heading, text, btnText }: SuccessPageProps) {
           <p className="md:text-normal text-[12px] text-[#EDE9EE]">{text}</p>
         </div>
         <Button className="w-full rounded-xl bg-white font-semibold text-black">
-          <Link href="/sign-in">{btnText}</Link>
+          <Link href={link}>{btnText}</Link>
         </Button>
       </div>
       <div className="absolute bottom-0 left-0 z-10">
