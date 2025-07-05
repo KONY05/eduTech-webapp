@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -63,13 +64,27 @@ function Page() {
     },
   });
 
+  useEffect(() => {
+    function handleVeilVisibility() {
+      const seenSignUpVeil = localStorage.getItem("seenSignUpVeil");
+      if (seenSignUpVeil === "true") {
+        setIsFirstSectionVisible(false);
+      }
+    }
+
+    handleVeilVisibility()
+  }, [])
+
   const [isFirstSectionVisible, setIsFirstSectionVisible] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSectionClick = () => {
     setIsFirstSectionVisible(false);
+    localStorage.setItem("seenSignUpVeil", "true");
   };
+
+ 
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log("Form validated successfully");
