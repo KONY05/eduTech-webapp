@@ -36,7 +36,6 @@ const formSchema = z
       message: "Select a Level",
     }),
     referralCode: z.string().optional(),
-    // TODO: see if you can check when the both of them are the same
     password: z
       .string()
       .min(8, { message: "Password must be at least 8 characters." }),

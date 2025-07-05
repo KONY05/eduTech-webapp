@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ChevronsRight, X } from "lucide-react";
 import { SUBSCRIPTION_DATA } from "@/lib/constants";
 import SubscriptionContainer from "@/components/SubscriptionContainer";
+import Link from "next/link";
 
 type SubscriptionUrlProps = "full" | "primary" | "junior" | "senior";
 
@@ -28,18 +29,22 @@ function Page({
       </header>
       <div className="flex items-center px-4 md:pl-12">
         {subscriptionName === "full" && (
-          <p className="flex w-full items-center justify-start gap-1.5 text-[14px] underline-offset-1 hover:underline md:text-[16px]">
-            <X className="size-4" />
-            Cancel
-          </p>
+          <Link href="/">
+            <p className="relative z-50 flex w-full items-center justify-start gap-1.5 text-[14px] underline-offset-1 hover:underline md:text-[16px]">
+              <X className="size-4" />
+              Cancel
+            </p>
+          </Link>
         )}
         {subscriptionName !== "full" && (
-          <p className="flex w-full items-center justify-end gap-1.5 border text-[14px] underline-offset-1 hover:underline md:text-[16px]">
-            Skip <ChevronsRight className="size-4" />
-          </p>
+          <Link href="/">
+            <p className="flex w-full items-center justify-end gap-1.5 text-[14px] underline-offset-1 hover:underline md:text-[16px]">
+              Skip <ChevronsRight className="size-4" />
+            </p>
+          </Link>
         )}
       </div>
-      <section className="border">
+      <section className="">
         {plan.map((subscription, index) => (
           <div key={index}>
             <SubscriptionContainer subscription={subscription} />
