@@ -32,20 +32,9 @@ function SuccessPage({
           <p className="text-3xl/[38px] font-medium text-white">{heading}</p>
           <p className="md:text-normal text-[12px] text-[#EDE9EE]">{text}</p>
         </div>
-        <Button className="w-full rounded-xl bg-white font-semibold text-black">
+        <Button className="w-full rounded-xl bg-white font-semibold text-black hover:bg-[#474570]">
           <Link href={link}>{btnText}</Link>
         </Button>
-      </div>
-      <div className="absolute bottom-0 left-0 z-10">
-        {/*
-        <Image
-          src="/blurLayoutImage.png"
-          alt="layout Image"
-          width="300"
-          height="100"
-          className="md:w-[600px]"
-        />
-          */}
       </div>
     </main>
   );

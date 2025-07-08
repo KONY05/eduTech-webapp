@@ -7,30 +7,18 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { getBackgroundColor } from "@/lib/constants";
 
 function SubscriptionContainer({
   subscription,
 }: {
   subscription: Subscription;
-}) {
+  }) {
   const [checkedIndex, setCheckedIndex] = useState(0);
-  const { plan, description, planType } = subscription;
+  const router = useRouter()
 
-  // Define color styling for different subscription plans
-  const getBackgroundColor = (plan: string) => {
-    switch (plan) {
-      case "primary":
-        return "bg-[#FBBE07]";
-      case "junior":
-        return "bg-[#6BBB99]";
-      case "senior":
-        return "bg-[#F04438]";
-      case "full":
-        return "bg-[#5B64B1]";
-      default:
-        return "bg-[#FBBE07]";
-    }
-  };
+  const { plan, description, planType } = subscription;
 
   const getShadowColor = (plan: string) => {
     switch (plan) {
@@ -61,6 +49,13 @@ function SubscriptionContainer({
         return "data-[state=checked]:bg-[#FBBE07]";
     }
   };
+
+  function handleSubscriptionPlan() {
+    localStorage.setItem("subscriptionPlan", plan);
+    console.log("subscription plan has been set to: ", plan);
+    router.push("/")
+    
+  }
 
   return (
     <div className="relative">
@@ -116,7 +111,7 @@ function SubscriptionContainer({
           ))}
         </div>
         <div className="mt-4 md:mt-8">
-          <Button className="w-full rounded-xl bg-[#2F2D51] hover:bg-[#3a3860]">
+          <Button className="w-full rounded-xl bg-[#2F2D51] hover:bg-[#3a3860]" onClick={handleSubscriptionPlan}>
             Buy now
           </Button>
           {plan !== "full" && (

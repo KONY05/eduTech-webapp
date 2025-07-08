@@ -50,7 +50,11 @@ const formSchema = z
   });
 
 function Page() {
+  const [isFirstSectionVisible, setIsFirstSectionVisible] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -75,16 +79,10 @@ function Page() {
     handleVeilVisibility()
   }, [])
 
-  const [isFirstSectionVisible, setIsFirstSectionVisible] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
   const handleSectionClick = () => {
     setIsFirstSectionVisible(false);
     localStorage.setItem("seenSignUpVeil", "true");
   };
-
- 
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log("Form validated successfully");
@@ -359,7 +357,7 @@ function Page() {
                   />
                   <Button
                     type="submit"
-                    className={`w-full rounded-xl font-semibold ${!form.formState.isValid && "cursor-not-allowed bg-[#CBCAD3]"}`}
+                    className={`w-full rounded-xl font-semibold ${!form.formState.isValid && "cursor-not-allowed bg-[#CBCAD3] hover:bg-[#CBCAD3]"}`}
                   >
                     Create an Account
                   </Button>
