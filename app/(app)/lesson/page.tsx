@@ -89,7 +89,7 @@ function LessonPage() {
       <section className="relative z-50 mt-3 space-y-3 md:mt-6 md:space-y-6">
         <div className="lg:flex lg:justify-center">
           <video
-            src="/video/testVideo.mov"
+            src="/video/testVideo.mp4"
             controls
             controlsList="nodownload"
             className="lg:h-[500px]"

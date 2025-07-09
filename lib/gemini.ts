@@ -27,7 +27,7 @@ export async function AISummary(videoPath: string): Promise<string> {
 
     const myfile = await ai.files.upload({
       file: fileBlob,
-      config: { mimeType: "video/mov" },
+      config: { mimeType: "video/mp4" },
     });
 
     if (!myfile.name) {
