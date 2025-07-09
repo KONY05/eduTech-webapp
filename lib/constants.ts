@@ -187,3 +187,18 @@ export const RecommendedLessons = [
     lesson_amt: 9,
   },
 ];
+
+export const LessonContent = [
+  {
+    lessonName: "Intro to Multiplication",
+    duration: "01:00",
+  },
+  {
+    lessonName: "Basic Multiplication",
+    duration: "03:33",
+  },
+  {
+    lessonName: "More ways to Multiply",
+    duration: "05:03",
+  },
+];

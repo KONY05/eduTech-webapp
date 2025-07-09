@@ -33,8 +33,6 @@ function Page() {
     console.log(values);
   }
 
-
-
   function handleBackClick() {
     router.back();
   }

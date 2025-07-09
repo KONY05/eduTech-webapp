@@ -17,7 +17,7 @@ function Header() {
   }, []);
 // TODO: Implement Mobile Nav
   return (
-    <header className="justify-between lg:justify-end border-b px-2 py-3 flex items-center md:py-4 md:pr-12">
+    <header className="justify-between lg:justify-end border-b px-2 py-3 flex items-center gap-3 md:py-4 md:pr-12">
       <Menu className="lg:hidden cursor-pointer"/>
       <div className="flex items-center gap-4">
         <Button
@@ -28,7 +28,7 @@ function Header() {
         <Search className="size-5 cursor-pointer" />
         <Bell className="size-5 cursor-pointer hover:animate-pulse" />
 
-        <div className="flex items-center gap-3 rounded-[1000px] border px-3 py-2">
+        <div className="flex items-center gap-3 rounded-[1000px] border px-3 py-1.5">
           <Image
             src="/KonyScript Logo.png"
             alt="my logo"
